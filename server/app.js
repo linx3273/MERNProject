@@ -10,7 +10,12 @@ require('./db/conn');
 app.use(express.json());
 app.use(require('./router/auth'));
 
- 
+app.get('/login',(req,res) => {
+    res.send("login");
+});
+app.get('/register',(req,res) => {
+    res.send("register");
+});
 app.get('/about',(req,res) => {
     res.send("aboutus");
 });

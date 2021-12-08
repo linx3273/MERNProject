@@ -81,6 +81,10 @@ router.post('/login',async (req,res)=>{
             const isMatch = await bcrypt.compare(password,userLogin.password);
 
             token = await userLogin.generateAuthToken();
+            res.cookie('jwtoken',token,{
+                expires: new Date(Date.now()+3600000),  //token will expire in 1 hour
+                httpOnly:true
+            })
 
             if(!isMatch){
                 res.status(400).json({error: "Invalid Credentials"});
