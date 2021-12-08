@@ -38,7 +38,7 @@ router.get('/',(req,res) => {
 
 router.post('/register', async (req,res)=>{
     
-    const {name,email,phone,password} = req.body;
+    const {name,email,phone,password,cpassword} = req.body;
     // now name will be like req.body.name and email will be req.body.email and so on
 
     if(!name || !email || !phone || !password){
@@ -53,6 +53,9 @@ router.post('/register', async (req,res)=>{
         const phoneExists = await User.findOne({phone:phone});
         if(phoneExists){
             return res.status(422).json({error: "Phone Number already in use"});
+        }
+        if(password != cpassword){
+            return res.status(422).json({error: "Passwords do not match"});
         }
 
         const user = new User({name,email,phone,password});
